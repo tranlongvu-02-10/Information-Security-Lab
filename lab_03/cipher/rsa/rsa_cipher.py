@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
-from ui_rsa import Ui_MainWindow
+from ui.rsa import Ui_MainWindow
 import requests
 
 class MyApp(QMainWindow):
@@ -8,7 +8,6 @@ class MyApp(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
         self.ui.btn_gen_keys.clicked.connect(self.call_api_gen_keys)
         self.ui.btn_encrypt.clicked.connect(self.call_api_encrypt)
         self.ui.btn_decrypt.clicked.connect(self.call_api_decrypt)
