@@ -5,13 +5,13 @@ import requests
 
 class MyApp(QMainWindow):
     def __init__(self):
-        super() .__init__()
-        self.ui= Ui_MainWindow()
+        super().__init__()
+        self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.ui.btn_gen_keys.clicked.connect(self.call_api_gen_keys)
-        self.ui.btn_sign.clicked.connect(self.call_api_sign)
+        self.ui.btn_gisn.clicked.connect(self.call_api_sign)
         self.ui.btn_verify.clicked.connect(self.call_api_verify)
-
+    
     def call_api_gen_keys(self):
         url = "http://127.0.0.1:5000/api/ecc/generate_keys"
         try:
@@ -24,7 +24,7 @@ class MyApp(QMainWindow):
                 msg.exec_()
             else:
                 print("Error while calling API")
-        except requests.exceptions. RequestException as e:
+        except requests.exceptions.RequestException as e:
             print("Error: %s" % e.message)
     
     def call_api_sign(self):
@@ -54,10 +54,10 @@ class MyApp(QMainWindow):
             "signature": self.ui.txt_sign.toPlainText()
         }
         try:
-            response = requests.post(url, json = payload)
+            response = requests.post(url, json=payload)
             if response.status_code == 200:
                 data = response.json()
-                if (data["is_verified"]):
+                if (data["is_valid"]):
                     msg = QMessageBox()
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Verified Successfully")
@@ -69,5 +69,11 @@ class MyApp(QMainWindow):
                     msg.exec_()
             else:
                 print("Error while calling API")
-        except requests.exceptions. RequestException as e:
+        except requests.exceptions.RequestException as e:
             print("Error: %s" % e.message)
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = MyApp()
+    window.show()
+    sys.exit(app.exec_())
